@@ -29,6 +29,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+/**
+ * @param modifier Modifier
+ * @param headerText 카드 제목으로, 너무 길면 ...로 표시됩니다.
+ * @param content 카드 본문으로, 너무 길면 ...로 표시됩니다.
+ * @param tags 카드 태그로, 최대 5개까지 입력할 수 있습니다.
+ * @param accountName 카드 계정 이름으로, 너무 길면 ...로 표시됩니다.
+ */
 @Composable
 fun KanbanBoardCard(
     modifier: Modifier = Modifier,
