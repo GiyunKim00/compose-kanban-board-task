@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 
+
 private data class KanbanCardPreviewModel(
     val headerText: String,
     val content: String,
@@ -15,6 +16,9 @@ private data class KanbanCardPreviewModel(
     val accountName: String,
 )
 
+/**
+ * 여러 케이스에 따른 KanbanCard의 Preview를 모아볼 수 있습니다.
+ */
 private class KanbanCardPreviewParameterProvider : PreviewParameterProvider<KanbanCardPreviewModel> {
     override val values: Sequence<KanbanCardPreviewModel> = sequenceOf(
         KanbanCardPreviewModel(

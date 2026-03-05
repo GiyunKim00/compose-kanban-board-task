@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import java.awt.SystemColor.text
 
 /**
  * @param modifier Modifier
@@ -52,12 +53,17 @@ fun KanbanBoardCard(
     ) {
         CardHeader(headerText = headerText, modifier = Modifier.fillMaxWidth())
         CardContent(contentText = content, modifier = Modifier.fillMaxWidth())
-        CardTags(tags = tags)
+        CardTagsSection(tags = tags)
         HorizontalDivider()
         CardAccountInfo(modifier = Modifier.padding(vertical = 10.dp).fillMaxWidth(), accountName = accountName)
     }
 }
 
+/**
+ * 최대 1줄까지 표시되는 Card의 Header입니다.
+ * @param modifier Modifier
+ * @param headerText 카드 제목으로, 너무 길면...로 표시됩니다.
+ */
 @Composable
 private fun CardHeader(modifier: Modifier = Modifier, headerText: String) {
     Text(
@@ -72,6 +78,11 @@ private fun CardHeader(modifier: Modifier = Modifier, headerText: String) {
     )
 }
 
+/**
+ * 최대 2줄까지 표시되는 Card의 Content입니다.
+ * @param modifier Modifier
+ * @param contentText 카드 본문으로, 너무 길면 ...로 표시됩니다.
+ */
 @Composable
 private fun CardContent(modifier: Modifier = Modifier, contentText: String) {
     if (contentText.isNotEmpty()) {
@@ -88,8 +99,12 @@ private fun CardContent(modifier: Modifier = Modifier, contentText: String) {
     }
 }
 
+/**
+ * CardTag 섹션입니다. TagChip이 표시됩니다.
+ * @param tags 카드 태그로, 최대 5개까지 입력할 수 있습니다.
+ */
 @Composable
-private fun CardTags(tags: List<String> = listOf()) {
+private fun CardTagsSection(tags: List<String> = listOf()) {
     val visible = tags.take(5).map { it.take(5) }
     if (visible.isEmpty()) return
 
@@ -97,22 +112,33 @@ private fun CardTags(tags: List<String> = listOf()) {
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        visible.forEach { TagChip(text = it) }
+        visible.forEach { TagChip(chipText = it) }
     }
 }
 
+/**
+ * CardTag의 Chip입니다.
+ * @param modifier Modifier
+ * @param text TagChip의 내용입니다.
+ */
 @Composable
-private fun TagChip(modifier: Modifier = Modifier, text: String) {
+private fun TagChip(modifier: Modifier = Modifier, chipText: String) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .background(color = Color(0xfff3f4f6), shape = RoundedCornerShape(16.dp))
             .padding(vertical = 5.dp, horizontal = 8.dp),
     ) {
-        Text(text = text, fontWeight = FontWeight.W400, fontSize = 12.sp)
+        Text(text = chipText, fontWeight = FontWeight.W400, fontSize = 12.sp)
     }
 }
 
+/**
+ * CardAccountInfo 섹션입니다.
+ * @param modifier Modifier
+ * @param iconImage 프로필 아이콘입니다. 기본 값은 Icons.Default.AccountCircle입니다.
+ * @param accountName 카드 계정 이름으로, 너무 길면 ...로 표시됩니다.
+ */
 @Composable
 private fun CardAccountInfo(
     modifier: Modifier = Modifier,
