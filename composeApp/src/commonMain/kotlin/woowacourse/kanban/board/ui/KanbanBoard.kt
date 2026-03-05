@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,72 +30,76 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun KanbanBoardCard(headerText: String, content: String, tagList: List<String> = listOf(), accountName: String) {
+fun KanbanBoardCard(
+    modifier: Modifier = Modifier,
+    headerText: String,
+    content: String,
+    tags: List<String> = listOf(),
+    accountName: String,
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier
-            .width(286.dp)
+        modifier = modifier
             .background(color = Color(0xffffffff), shape = RoundedCornerShape(16.dp))
             .border(color = Color(0xffE5E7Eb), width = 1.dp, shape = RoundedCornerShape(16.dp))
             .padding(all = 17.dp),
     ) {
-        Text(
-            text = headerText,
-            fontSize = 16.sp,
-            letterSpacing = 0.3.sp,
-            lineHeight = 24.sp,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.fillMaxWidth(),
-        )
-        if (content.isNotEmpty())
-            Text(
-                text = content,
-                fontSize = 14.sp,
-                letterSpacing = 0.15.sp,
-                lineHeight = 20.sp,
-                fontWeight = FontWeight.W400,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth(),
-            )
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(4.dp),
-        ) {
-            tagList.forEachIndexed { index, it ->
-                if (index < 5)
-                    CustomChip(text = if (it.length > 5) it.substring(0, 5) else it)
-
-            }
-        }
+        CardHeader(headerText = headerText, modifier = Modifier.fillMaxWidth())
+        CardContent(contentText = content, modifier = Modifier.fillMaxWidth())
+        CardTags(tags = tags)
         HorizontalDivider()
-        Row(
-            modifier = Modifier
-                .padding(vertical = 10.dp)
-                .fillMaxWidth(),
-        ) {
-            Icon(
-                imageVector = Icons.Default.AccountCircle,
-                contentDescription = "프로필기본값",
-                modifier = Modifier.size(24.dp),
-                tint = Color(0xff838383),
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = accountName,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        }
+        CardAccountInfo(modifier = Modifier.padding(vertical = 10.dp).fillMaxWidth(), accountName = accountName)
     }
 }
 
 @Composable
-fun CustomChip(text: String) {
+private fun CardHeader(modifier: Modifier = Modifier, headerText: String) {
+    Text(
+        text = headerText,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Medium,
+        letterSpacing = 0.3.sp,
+        lineHeight = 24.sp,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis,
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun CardContent(modifier: Modifier = Modifier, contentText: String) {
+    if (contentText.isNotEmpty()) {
+        Text(
+            text = contentText,
+            fontSize = 14.sp,
+            letterSpacing = 0.15.sp,
+            lineHeight = 20.sp,
+            fontWeight = FontWeight.W400,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            modifier = modifier,
+        )
+    }
+}
+
+@Composable
+private fun CardTags(tags: List<String> = listOf()) {
+    val visible = tags.take(5).map { it.take(5) }
+    if (visible.isEmpty()) return
+
+    FlowRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+        visible.forEach { TagChip(text = it) }
+    }
+}
+
+@Composable
+private fun TagChip(modifier: Modifier = Modifier, text: String) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier = modifier
             .background(color = Color(0xfff3f4f6), shape = RoundedCornerShape(16.dp))
             .padding(vertical = 5.dp, horizontal = 8.dp),
     ) {
@@ -103,12 +108,37 @@ fun CustomChip(text: String) {
 }
 
 @Composable
+private fun CardAccountInfo(
+    modifier: Modifier = Modifier,
+    iconImage: ImageVector = Icons.Default.AccountCircle,
+    accountName: String,
+) {
+    Row(
+        modifier = modifier,
+    ) {
+        Icon(
+            imageVector = iconImage,
+            contentDescription = "프로필기본값",
+            modifier = Modifier.size(24.dp),
+            tint = Color(0xff838383),
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Text(
+            text = accountName,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
+@Composable
 @Preview(showBackground = true)
 fun KanbanBoard() {
     KanbanBoardCard(
+        modifier = Modifier.width(286.dp),
         headerText = "Lazy Column 컴포넌트 구현",
         content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
-        tagList = listOf("컴포넌트", "성능"),
+        tags = listOf("컴포넌트", "성능"),
         accountName = "다이노",
     )
 }
@@ -118,9 +148,10 @@ fun KanbanBoard() {
 @Preview(showBackground = true)
 fun ContentlessKanbanBoard() {
     KanbanBoardCard(
+        modifier = Modifier.width(286.dp),
         headerText = "Lazy Column 컴포넌트 구현",
         content = "",
-        tagList = listOf("컴포넌트", "성능"),
+        tags = listOf("컴포넌트", "성능"),
         accountName = "다이노",
     )
 }
@@ -130,9 +161,9 @@ fun ContentlessKanbanBoard() {
 @Preview(showBackground = true)
 fun TaglessKanbanBoard() {
     KanbanBoardCard(
+        modifier = Modifier.width(286.dp),
         headerText = "Lazy Column 컴포넌트 구현",
         content = "세로 스크롤 가능한 리스트 컴포넌트를 만들고 성능 최적화를 적용합니다.",
-        tagList = listOf(),
         accountName = "다이노",
     )
 }
@@ -142,9 +173,9 @@ fun TaglessKanbanBoard() {
 @Preview(showBackground = true)
 fun EmptyKanbanBoard() {
     KanbanBoardCard(
+        modifier = Modifier.width(286.dp),
         headerText = "Lazy Column 컴포넌트 구현",
         content = "",
-        tagList = listOf(),
         accountName = "다이노",
     )
 }
@@ -154,9 +185,10 @@ fun EmptyKanbanBoard() {
 @Preview(showBackground = true)
 fun MaxKanbanBoard() {
     KanbanBoardCard(
+        modifier = Modifier.width(286.dp),
         headerText = "너무너무 긴 제목은 한 줄까지만 노출너무너무 긴 제목은 한 줄까지만 노출",
         content = "너무너무너무 긴 설명은 두 줄까지만 노출하고 말줄임표로 처리합니다 두 줄까지만 노너무너무너무 긴 설명은 두 줄까지만 노출하고 말줄임표로 처리합니다 두 줄까지만 노",
-        tagList = listOf("너무너무", "긴 태그", "최대로", "5자까지진짜로", "5개제한임", "6개"),
+        tags = listOf("너무너무", "긴 태그", "최대로", "5자까지진짜로", "5개제한임", "6개"),
         accountName = "너무너무너무 긴 담당자도 한 줄너무너무너무 긴 담당자도 한 줄",
     )
 }
