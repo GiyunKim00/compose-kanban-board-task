@@ -23,6 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -48,25 +50,29 @@ fun KanbanBoardCard(
     ) {
 
         CardTitle(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Kanban Card Title" },
             title = kanbanCardData.title,
         )
 
         if (kanbanCardData.hasContent()) {
             CardContent(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Kanban Card Content" },
                 content = kanbanCardData.content,
             )
         }
 
-        if (kanbanCardData.hasTag()) CardTagsSection(tags = kanbanCardData.tags)
+        if (kanbanCardData.hasTag()) CardTagsSection(
+            modifier = Modifier.semantics { contentDescription = "Kanban Card Tag" },
+            tags = kanbanCardData.tags,
+        )
 
         HorizontalDivider()
 
         CardAccountInfo(
             modifier = Modifier
                 .padding(vertical = 10.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .semantics { contentDescription = "Kanban Card Account Info" },
             accountImage = Icons.Default.AccountCircle, /* 추후 api나, Async 등으로 이미지를 불러올 경우 수정할 예정. */
             accountName = kanbanCardData.accountName,
         )
@@ -116,12 +122,12 @@ private fun CardContent(modifier: Modifier = Modifier, content: String) {
  * @param tags 카드 태그로, 최대 5개까지 입력할 수 있습니다.
  */
 @Composable
-private fun CardTagsSection(tags: List<String> = listOf()) {
+private fun CardTagsSection(modifier: Modifier = Modifier, tags: List<String> = listOf()) {
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-        tags.forEach { TagChip(chipContent = it) }
+        tags.forEach { TagChip(modifier = modifier, chipContent = it) }
     }
 }
 
