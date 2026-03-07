@@ -17,6 +17,17 @@ class KanbanCardData private constructor(
             accountName: String,
         ): KanbanCardData {
             require(title.isNotBlank()) { "[KanbanCard] 제목은 필수 입력 항목입니다." }
+
+            return KanbanCardData(
+                title = title,
+                content = content,
+                tags = tags
+                    .map { it.trim() }
+                    .filter { it.isNotEmpty() }
+                    .take(MAX_TAG_COUNT)
+                    .map { it.take(MAX_TAG_LENGTH) },
+                accountName = accountName,
+            )
         }
     }
 
