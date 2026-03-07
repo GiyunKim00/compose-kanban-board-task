@@ -9,5 +9,14 @@ class KanbanCardData private constructor(
     companion object {
         private const val MAX_TAG_COUNT = 5
         private const val MAX_TAG_LENGTH = 5
+
+        fun create(
+            title: String,
+            content: String,
+            tags: List<String>,
+            accountName: String,
+        ): KanbanCardData {
+            require(title.isNotBlank()) { "[KanbanCard] 제목은 필수 입력 항목입니다." }
+        }
     }
 }
