@@ -14,6 +14,9 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
+/**
+ * [KanbanCardData] Unit 테스트 클래스입니다.
+ */
 class KanbanCardDataTest {
     @Test
     fun `제목이 공백만 있으면 생성할 수 없다`() {
@@ -100,6 +103,9 @@ class KanbanCardDataTest {
     }
 }
 
+/**
+ * [KanbanBoardCard] UI 테스트 클래스입니다.
+ */
 @OptIn(ExperimentalTestApi::class)
 class KanbanBoardCardTest {
 
