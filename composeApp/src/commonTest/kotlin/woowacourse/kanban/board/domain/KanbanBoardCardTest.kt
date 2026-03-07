@@ -143,4 +143,23 @@ class KanbanBoardCardTest {
         onAllNodesWithContentDescription("Kanban Card Tag").assertCountEquals(0)
         onNodeWithContentDescription("Kanban Card Account Info").assertIsDisplayed()
     }
+
+    @Test
+    fun `내용이 없는 경우, 내용이 출력되지 않는다`() = runComposeUiTest {
+        val tags = listOf("태그1", "태그2", "태그3", "태그4")
+        val cardData = KanbanCardData.create(
+            title = "제목",
+            content = "",
+            tags = tags,
+            accountName = "테스트 계정"
+        )
+
+        setContent {
+            KanbanBoardCard(kanbanCardData = cardData)
+        }
+        onNodeWithContentDescription("Kanban Card Title").assertIsDisplayed()
+        onNodeWithContentDescription("Kanban Card Content").assertDoesNotExist()
+        onAllNodesWithContentDescription("Kanban Card Tag").assertCountEquals(tags.size)
+        onNodeWithContentDescription("Kanban Card Account Info").assertIsDisplayed()
+    }
 }
