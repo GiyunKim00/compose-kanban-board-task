@@ -162,4 +162,41 @@ class KanbanBoardCardTest {
         onAllNodesWithContentDescription("Kanban Card Tag").assertCountEquals(tags.size)
         onNodeWithContentDescription("Kanban Card Account Info").assertIsDisplayed()
     }
+
+    @Test
+    fun `태그가 없는 경우, 태그가 출력되지 않는다`() = runComposeUiTest {
+        val cardData = KanbanCardData.create(
+            title = "제목",
+            content = "내용",
+            tags = emptyList(),
+            accountName = "테스트 계정"
+        )
+
+        setContent {
+            KanbanBoardCard(kanbanCardData = cardData)
+        }
+
+        onNodeWithContentDescription("Kanban Card Title").assertIsDisplayed()
+        onNodeWithContentDescription("Kanban Card Content").assertIsDisplayed()
+        onAllNodesWithContentDescription("Kanban Card Tag").assertCountEquals(0)
+        onNodeWithContentDescription("Kanban Card Account Info").assertIsDisplayed()
+    }
+
+    @Test
+    fun `태그가 5개를 초과하는 경우, 5개만 출력된다`() = runComposeUiTest {
+        val cardData = KanbanCardData.create(
+            title = "제목",
+            content = "내용",
+            tags = listOf("태그1", "태그2", "태그3", "태그4", "태그5", "태그6"),
+            accountName = "테스트 계정"
+        )
+
+        setContent {
+            KanbanBoardCard(kanbanCardData = cardData)
+        }
+        onNodeWithContentDescription("Kanban Card Title").assertIsDisplayed()
+        onNodeWithContentDescription("Kanban Card Content").assertIsDisplayed()
+        onAllNodesWithContentDescription("Kanban Card Tag").assertCountEquals(5)
+        onNodeWithContentDescription("Kanban Card Account Info").assertIsDisplayed()
+    }
 }
