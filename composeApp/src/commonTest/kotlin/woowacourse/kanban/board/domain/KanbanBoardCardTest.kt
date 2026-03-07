@@ -109,7 +109,7 @@ class KanbanBoardCardTest {
             title = "제목",
             content = "내용",
             tags = listOf("태그1", "태그2", "태그3", "태그4", "태그5"),
-            accountName = "테스트 계정"
+            accountName = "테스트 계정",
         )
 
         setContent {
@@ -132,7 +132,7 @@ class KanbanBoardCardTest {
             title = "제목",
             content = "",
             tags = emptyList(),
-            accountName = "테스트 계정"
+            accountName = "테스트 계정",
         )
 
         setContent {
@@ -151,7 +151,7 @@ class KanbanBoardCardTest {
             title = "제목",
             content = "",
             tags = tags,
-            accountName = "테스트 계정"
+            accountName = "테스트 계정",
         )
 
         setContent {
@@ -169,7 +169,7 @@ class KanbanBoardCardTest {
             title = "제목",
             content = "내용",
             tags = emptyList(),
-            accountName = "테스트 계정"
+            accountName = "테스트 계정",
         )
 
         setContent {
@@ -188,7 +188,7 @@ class KanbanBoardCardTest {
             title = "제목",
             content = "내용",
             tags = listOf("태그1", "태그2", "태그3", "태그4", "태그5", "태그6"),
-            accountName = "테스트 계정"
+            accountName = "테스트 계정",
         )
 
         setContent {
@@ -197,6 +197,26 @@ class KanbanBoardCardTest {
         onNodeWithContentDescription("Kanban Card Title").assertIsDisplayed()
         onNodeWithContentDescription("Kanban Card Content").assertIsDisplayed()
         onAllNodesWithContentDescription("Kanban Card Tag").assertCountEquals(5)
+        onNodeWithContentDescription("Kanban Card Account Info").assertIsDisplayed()
+    }
+
+    @Test
+    fun `태그 내용이 5글자를 초과하는 경우, 5글자까지만 출력된다`() = runComposeUiTest {
+        val cardData = KanbanCardData.create(
+            title = "제목",
+            content = "내용",
+            tags = listOf("우아한테크코스", "안드로이드8기", "칸반보드리팩터링"),
+            accountName = "테스트 계정",
+        )
+
+        setContent {
+            KanbanBoardCard(kanbanCardData = cardData)
+        }
+        onNodeWithContentDescription("Kanban Card Title").assertIsDisplayed()
+        onNodeWithContentDescription("Kanban Card Content").assertIsDisplayed()
+        onNodeWithText("우아한테크").assertIsDisplayed()
+        onNodeWithText("안드로이드").assertIsDisplayed()
+        onNodeWithText("칸반보드리").assertIsDisplayed()
         onNodeWithContentDescription("Kanban Card Account Info").assertIsDisplayed()
     }
 }
