@@ -19,4 +19,7 @@ class KanbanCardData private constructor(
             require(title.isNotBlank()) { "[KanbanCard] 제목은 필수 입력 항목입니다." }
         }
     }
+
+    fun hasContent(): Boolean = content.isNotBlank()
+    fun hasTag(): Boolean = tags.isNotEmpty()
 }
