@@ -1,4 +1,4 @@
-package woowacourse.kanban.board.study
+package woowacourse.kanban.board.domain
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
