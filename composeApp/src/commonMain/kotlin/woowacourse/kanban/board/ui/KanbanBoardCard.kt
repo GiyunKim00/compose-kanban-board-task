@@ -175,9 +175,9 @@ fun TagChipPreview() {
  */
 @Composable
 private fun CardAccountInfo(
+    accountName: String,
     modifier: Modifier = Modifier,
     accountImage: ImageVector = Icons.Default.AccountCircle,
-    accountName: String,
 ) {
     Row(
         modifier = modifier,
