@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import woowacourse.kanban.board.domain.KanbanCardData
 
 /**
- * KanbanBoardCard UI입니다. Header, Content, Tags, AccountInfo로 구성되어 있습니다.
+ * KanbanBoardCard UI입니다.
  * @param kanbanCardData KanbanCard의 데이터입니다.
  * @param modifier Modifier
  */
