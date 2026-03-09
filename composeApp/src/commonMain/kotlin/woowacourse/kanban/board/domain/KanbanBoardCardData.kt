@@ -5,7 +5,7 @@ package woowacourse.kanban.board.domain
  * 카드 생성 규칙을 적용합니다.
  * 생성은 [create] 팩토리 메서드로 수행합니다.
  */
-class KanbanCardData private constructor(
+class KanbanBoardCardData private constructor(
     val title: String,
     val content: String,
     val tags: List<String>,
@@ -16,7 +16,7 @@ class KanbanCardData private constructor(
         private const val MAX_TAG_LENGTH = 5
 
         /**
-         * [KanbanCardData] 객체 생성 팩토리 메서드입니다.
+         * [KanbanBoardCardData] 객체 생성 팩토리 메서드입니다.
          * @param title 필수 | 제목
          * @param content 본문
          * @param tags 태그
@@ -28,11 +28,11 @@ class KanbanCardData private constructor(
             content: String,
             tags: List<String>,
             accountName: String,
-        ): KanbanCardData {
+        ): KanbanBoardCardData {
             require(title.isNotBlank()) { "[KanbanCard] 제목은 필수 입력 항목입니다." }
             require(accountName.isNotBlank()) { "[KanbanCard] 계정명은 필수 입력 항목입니다." }
 
-            return KanbanCardData(
+            return KanbanBoardCardData(
                 title = title,
                 content = content,
                 tags = tags

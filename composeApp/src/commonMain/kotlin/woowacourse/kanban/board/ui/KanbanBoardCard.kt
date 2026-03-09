@@ -30,16 +30,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import woowacourse.kanban.board.domain.KanbanCardData
+import woowacourse.kanban.board.domain.KanbanBoardCardData
 
 /**
  * KanbanBoardCard UI입니다.
- * @param kanbanCardData KanbanCard의 데이터입니다.
+ * @param kanbanBoardCardData KanbanCard의 데이터입니다.
  * @param modifier Modifier
  */
 @Composable
 fun KanbanBoardCard(
-    kanbanCardData: KanbanCardData,
+    kanbanBoardCardData: KanbanBoardCardData,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -51,26 +51,26 @@ fun KanbanBoardCard(
     ) {
 
         CardTitle(
-            title = kanbanCardData.title,
+            title = kanbanBoardCardData.title,
             modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Kanban Card Title" },
         )
 
-        if (kanbanCardData.hasContent()) {
+        if (kanbanBoardCardData.hasContent()) {
             CardContent(
-                content = kanbanCardData.content,
+                content = kanbanBoardCardData.content,
                 modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Kanban Card Content" },
             )
         }
 
-        if (kanbanCardData.hasTag()) CardTagsSection(
-            tags = kanbanCardData.tags
+        if (kanbanBoardCardData.hasTag()) CardTagsSection(
+            tags = kanbanBoardCardData.tags
         )
 
         HorizontalDivider()
 
         CardAccountInfo(
             accountImage = Icons.Default.AccountCircle, /* 추후 api나, Async 등으로 이미지를 불러올 경우 수정할 예정. */
-            accountName = kanbanCardData.accountName,
+            accountName = kanbanBoardCardData.accountName,
             modifier = Modifier
                 .padding(vertical = 10.dp)
                 .fillMaxWidth()
