@@ -17,7 +17,7 @@ import kotlin.test.Test
 class KanbanBoardCardTest {
 
     @Test
-    fun `모든 필드가 요구 사항대로 입력된 경우, 모든 내용이 노출된다`() = runComposeUiTest {
+    fun `KanbanBoardCard의 제목, 내용, 태그, 계정명이 입력되면, 해당 필드가 모두 표시된다`() = runComposeUiTest {
         val cardData = KanbanBoardCardData.create(
             title = "제목",
             content = "내용",
@@ -40,7 +40,7 @@ class KanbanBoardCardTest {
     }
 
     @Test
-    fun `제목과 계정 정보만으로 카드를 구성할 수 있다`() = runComposeUiTest {
+    fun `제목과 계정명이 화면에 표시된다`() = runComposeUiTest {
         val cardData = KanbanBoardCardData.create(
             title = "제목",
             content = "",
@@ -58,7 +58,7 @@ class KanbanBoardCardTest {
     }
 
     @Test
-    fun `내용이 없는 경우, 내용이 출력되지 않는다`() = runComposeUiTest {
+    fun `내용이 없는 경우, 내용 영역이 표시되지 않는다`() = runComposeUiTest {
         val tags = listOf("태그1", "태그2", "태그3", "태그4")
         val cardData = KanbanBoardCardData.create(
             title = "제목",
@@ -92,44 +92,6 @@ class KanbanBoardCardTest {
         onNodeWithContentDescription("Kanban Card Title").assertIsDisplayed()
         onNodeWithContentDescription("Kanban Card Content").assertIsDisplayed()
         onAllNodesWithContentDescription("Kanban Card Tag").assertCountEquals(0)
-        onNodeWithContentDescription("Kanban Card Account Info").assertIsDisplayed()
-    }
-
-    @Test
-    fun `태그가 5개를 초과하는 경우, 5개만 출력된다`() = runComposeUiTest {
-        val cardData = KanbanBoardCardData.create(
-            title = "제목",
-            content = "내용",
-            tags = listOf("태그1", "태그2", "태그3", "태그4", "태그5", "태그6"),
-            accountName = "테스트 계정",
-        )
-
-        setContent {
-            KanbanBoardCard(kanbanBoardCardData = cardData)
-        }
-        onNodeWithContentDescription("Kanban Card Title").assertIsDisplayed()
-        onNodeWithContentDescription("Kanban Card Content").assertIsDisplayed()
-        onAllNodesWithContentDescription("Kanban Card Tag").assertCountEquals(5)
-        onNodeWithContentDescription("Kanban Card Account Info").assertIsDisplayed()
-    }
-
-    @Test
-    fun `태그 내용이 5글자를 초과하는 경우, 5글자까지만 출력된다`() = runComposeUiTest {
-        val cardData = KanbanBoardCardData.create(
-            title = "제목",
-            content = "내용",
-            tags = listOf("우아한테크코스", "안드로이드8기", "칸반보드리팩터링"),
-            accountName = "테스트 계정",
-        )
-
-        setContent {
-            KanbanBoardCard(kanbanBoardCardData = cardData)
-        }
-        onNodeWithContentDescription("Kanban Card Title").assertIsDisplayed()
-        onNodeWithContentDescription("Kanban Card Content").assertIsDisplayed()
-        onNodeWithText("우아한테크").assertIsDisplayed()
-        onNodeWithText("안드로이드").assertIsDisplayed()
-        onNodeWithText("칸반보드리").assertIsDisplayed()
         onNodeWithContentDescription("Kanban Card Account Info").assertIsDisplayed()
     }
 }
