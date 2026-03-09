@@ -27,6 +27,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import woowacourse.kanban.board.domain.KanbanCardData
@@ -98,6 +99,13 @@ private fun CardTitle(title: String, modifier: Modifier = Modifier) {
     )
 }
 
+@Preview(backgroundColor = 0xffffffff, showBackground = true)
+@Composable
+fun CardTitlePreview() {
+    CardTitle(title = "Card Title")
+}
+
+
 /**
  * 최대 2줄까지 표시되는 Card의 Content입니다.
  * @param modifier Modifier
@@ -115,6 +123,12 @@ private fun CardContent(modifier: Modifier = Modifier, content: String) {
         overflow = TextOverflow.Ellipsis,
         modifier = modifier,
     )
+}
+
+@Preview(backgroundColor = 0xffffffff, showBackground = true)
+@Composable
+fun CardContentPreview() {
+    CardContent(content = "Card Content")
 }
 
 /**
@@ -148,6 +162,12 @@ private fun TagChip(modifier: Modifier = Modifier, chipContent: String) {
     }
 }
 
+@Preview(backgroundColor = 0xffffffff, showBackground = true)
+@Composable
+fun TagChipPreview() {
+    TagChip(chipContent = "Tag")
+}
+
 /**
  * CardAccountInfo 섹션입니다.
  * @param modifier Modifier
@@ -176,4 +196,10 @@ private fun CardAccountInfo(
             overflow = TextOverflow.Ellipsis,
         )
     }
+}
+
+@Preview(backgroundColor = 0xffffffff, showBackground = true)
+@Composable
+fun CardAccountInfoPreview() {
+    CardAccountInfo(accountName = "Test")
 }
