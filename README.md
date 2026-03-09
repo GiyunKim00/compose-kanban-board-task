@@ -38,7 +38,7 @@
 ## 리팩토링
 ### 2단계
 - 프로덕션
-  - [ ] API Guidelines for components in Jetpack Compose에 따른 파라미터 순서 변경
+  - [x] API Guidelines for components in Jetpack Compose에 따른 파라미터 순서 변경
   - [ ] 피드백에 따른 KDoc 주석 수정 (간결, 요약)
   - [ ] private composable 프리뷰 코드 작성
   - [ ] modifier 재사용성 피드백에 따른 로직 수정

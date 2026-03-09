@@ -33,13 +33,13 @@ import woowacourse.kanban.board.domain.KanbanCardData
 
 /**
  * KanbanBoardCard UI입니다. Header, Content, Tags, AccountInfo로 구성되어 있습니다.
- * @param modifier Modifier
  * @param kanbanCardData KanbanCard의 데이터입니다.
+ * @param modifier Modifier
  */
 @Composable
 fun KanbanBoardCard(
-    modifier: Modifier = Modifier,
     kanbanCardData: KanbanCardData,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
@@ -50,31 +50,31 @@ fun KanbanBoardCard(
     ) {
 
         CardTitle(
-            modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Kanban Card Title" },
             title = kanbanCardData.title,
+            modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Kanban Card Title" },
         )
 
         if (kanbanCardData.hasContent()) {
             CardContent(
-                modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Kanban Card Content" },
                 content = kanbanCardData.content,
+                modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Kanban Card Content" },
             )
         }
 
         if (kanbanCardData.hasTag()) CardTagsSection(
-            modifier = Modifier.semantics { contentDescription = "Kanban Card Tag" },
             tags = kanbanCardData.tags,
+            modifier = Modifier.semantics { contentDescription = "Kanban Card Tag" },
         )
 
         HorizontalDivider()
 
         CardAccountInfo(
+            accountImage = Icons.Default.AccountCircle, /* 추후 api나, Async 등으로 이미지를 불러올 경우 수정할 예정. */
+            accountName = kanbanCardData.accountName,
             modifier = Modifier
                 .padding(vertical = 10.dp)
                 .fillMaxWidth()
                 .semantics { contentDescription = "Kanban Card Account Info" },
-            accountImage = Icons.Default.AccountCircle, /* 추후 api나, Async 등으로 이미지를 불러올 경우 수정할 예정. */
-            accountName = kanbanCardData.accountName,
         )
     }
 }
@@ -85,7 +85,7 @@ fun KanbanBoardCard(
  * @param title 카드 제목으로, 너무 길면...로 표시됩니다.
  */
 @Composable
-private fun CardTitle(modifier: Modifier = Modifier, title: String) {
+private fun CardTitle(title: String, modifier: Modifier = Modifier) {
     Text(
         text = title,
         fontSize = 16.sp,
