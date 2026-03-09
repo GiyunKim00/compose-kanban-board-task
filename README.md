@@ -42,7 +42,11 @@
   - [x] 피드백에 따른 KDoc 주석 수정 (간결, 요약)
   - [x] private composable 프리뷰 코드 작성
   - [x] modifier 재사용성 피드백에 따른 로직 수정
+  - [ ] 피드백에 따른 기능 요구사항 재정의 및 KanbanBoardCardData.create() 메서드 내 로직 수정
+  - [ ] API Guidelines for components in Jetpack Compose에 따른 파라미터 순서 변경 작업 중 누락한 composable 수정
 - 테스트
   - [x] 프로덕션 패키지 구조와 테스트 패키지 구조 얼라인 및 파일 분리
   - [x] 모호한 테스트 함수명 수정
-  - [x] KanbanCardData.create()의 비즈니스 로직 테스트 / UI 테스트 모호성 수정
+  - [x] KanbanBoardCardData.create()의 비즈니스 로직 테스트 / UI 테스트 모호성 수정
+  - [ ] KanbanBoardCardData.creaete() 로직 변경에 따른 테스트 코드 수정
+    - [ ] 태그 개수 / 글자수 제한을 어길 시 assertFail로 로직 변경
