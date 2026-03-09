@@ -48,5 +48,5 @@
   - [x] 프로덕션 패키지 구조와 테스트 패키지 구조 얼라인 및 파일 분리
   - [x] 모호한 테스트 함수명 수정
   - [x] KanbanBoardCardData.create()의 비즈니스 로직 테스트 / UI 테스트 모호성 수정
-  - [ ] KanbanBoardCardData.creaete() 로직 변경에 따른 테스트 코드 수정
-    - [ ] 태그 개수 / 글자수 제한을 어길 시 assertFail로 로직 변경
+  - [x] KanbanBoardCardData.creaete() 로직 변경에 따른 테스트 코드 수정
+    - [x] 태그 개수 / 글자수 제한을 어길 시 assertFail로 로직 변경
