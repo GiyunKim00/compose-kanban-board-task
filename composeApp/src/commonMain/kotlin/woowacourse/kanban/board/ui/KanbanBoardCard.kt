@@ -63,8 +63,7 @@ fun KanbanBoardCard(
         }
 
         if (kanbanCardData.hasTag()) CardTagsSection(
-            tags = kanbanCardData.tags,
-            modifier = Modifier.semantics { contentDescription = "Kanban Card Tag" },
+            tags = kanbanCardData.tags
         )
 
         HorizontalDivider()
@@ -136,12 +135,12 @@ fun CardContentPreview() {
  * @param tags 카드 태그로, 최대 5개까지 입력할 수 있습니다.
  */
 @Composable
-private fun CardTagsSection(modifier: Modifier = Modifier, tags: List<String> = listOf()) {
+private fun CardTagsSection(tags: List<String> = listOf()) {
     FlowRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalArrangement = Arrangement.spacedBy(4.dp),
-    ) {
-        tags.forEach { TagChip(modifier = modifier, chipContent = it) }
+    ) {/* TagModifer, SectionModifier로 분리할까 고민했으나, 우선 현 방식대로 수정. */
+        tags.forEach { TagChip(modifier = Modifier.semantics { contentDescription = "Kanban Card Tag" }, chipContent = it) }
     }
 }
 
