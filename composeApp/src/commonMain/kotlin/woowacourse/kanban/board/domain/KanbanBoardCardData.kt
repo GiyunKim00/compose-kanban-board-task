@@ -21,7 +21,7 @@ class KanbanBoardCardData private constructor(
          * @param content 본문
          * @param tags 태그
          * @param accountName 필수 | 계정명
-         * @throws IllegalArgumentException 제목이나 계정명이 공백일 경우 예외를 던집니다.
+         * @throws IllegalArgumentException 기능 요구사항을 충족하지 않을 경우 예외를 던집니다.
          */
         fun create(
             title: String,
@@ -32,14 +32,17 @@ class KanbanBoardCardData private constructor(
             require(title.isNotBlank()) { "[KanbanCard] 제목은 필수 입력 항목입니다." }
             require(accountName.isNotBlank()) { "[KanbanCard] 계정명은 필수 입력 항목입니다." }
 
+            val normalizedTags = tags
+                .map { it.trim() }
+                .filter { it.isNotEmpty() }
+
+            require(normalizedTags.size <= MAX_TAG_COUNT) { "[KanbanCard] 태그는 최대 ${MAX_TAG_COUNT}개까지 가능합니다." }
+            require(normalizedTags.all { it.length <= MAX_TAG_LENGTH }) { "[KanbanCard] 태그는 최대 ${MAX_TAG_LENGTH}자까지 가능합니다." }
+
             return KanbanBoardCardData(
                 title = title,
                 content = content,
-                tags = tags
-                    .map { it.trim() }
-                    .filter { it.isNotEmpty() }
-                    .take(MAX_TAG_COUNT)
-                    .map { it.take(MAX_TAG_LENGTH) },
+                tags = normalizedTags,
                 accountName = accountName,
             )
         }
