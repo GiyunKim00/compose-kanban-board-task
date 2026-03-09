@@ -57,8 +57,8 @@ fun KanbanBoardCard(
 
         if (kanbanBoardCardData.hasContent()) {
             CardContent(
-                content = kanbanBoardCardData.content,
                 modifier = Modifier.fillMaxWidth().semantics { contentDescription = "Kanban Card Content" },
+                content = kanbanBoardCardData.content
             )
         }
 
@@ -69,12 +69,12 @@ fun KanbanBoardCard(
         HorizontalDivider()
 
         CardAccountInfo(
-            accountImage = Icons.Default.AccountCircle, /* 추후 api나, Async 등으로 이미지를 불러올 경우 수정할 예정. */
             accountName = kanbanBoardCardData.accountName,
             modifier = Modifier
                 .padding(vertical = 10.dp)
                 .fillMaxWidth()
                 .semantics { contentDescription = "Kanban Card Account Info" },
+            accountImage = Icons.Default.AccountCircle, /* 추후 api나, Async 등으로 이미지를 불러올 경우 수정할 예정. */
         )
     }
 }
